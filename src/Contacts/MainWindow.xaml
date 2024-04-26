@@ -10,33 +10,38 @@
         <local:ModalVM/>
     </Window.DataContext>
     <Grid Margin="5,5,5,5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="40px"/>
-        </Grid.RowDefinitions>
+
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="220px"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <GroupBox x:Name="EditContacts" Grid.Column="0" Header="Edit Contacts" Margin="0,0,5,0">
+        <StackPanel Grid.Column="0" Margin="0,0,5,0">
             <StackPanel Margin="3,3,3,3">
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="35px"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Content="Find:"/>
+                    <TextBox Grid.Column="1" x:Name="ContactSearchTextbox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Height="30px" Margin="5,0,0,0" VerticalContentAlignment="Center"/>
+                </Grid>
                 <StackPanel Height="60px">
-                    <Label Content="Name:"/>
-                    <TextBox x:Name="ContactNameTextbox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Width="auto" Height="30px" Margin="5,0,5,0" VerticalContentAlignment="Center"/>
+                    
                 </StackPanel>
-                <StackPanel Height="60px">
-                    <Label Content="Phone Number:"/>
-                    <TextBox x:Name="ContactPhoneTextbox" Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Width="auto" Height="30px" Margin="5,0,5,0" VerticalContentAlignment="Center"/>
-                </StackPanel>
-                <StackPanel Height="60px">
-                    <Label Content="Email:"/>
-                    <TextBox x:Name="ContactEmailTextbox" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Width="auto" Height="30px" Margin="5,0,5,0" VerticalContentAlignment="Center"/>
-                </StackPanel>
+                <UniformGrid Columns="3" Margin="0,0,0,0">
+                    <Button x:Name="AddButton" Content="Add" Height="20px" Command="{Binding SaveCommand}" IsEnabled="{Binding IsSaveEnabled}"/>
+                    <Button x:Name="EditButton" Content="Edit" Height="20px" Command="{Binding LoadCommand}"/>
+                    <Button x:Name="RemoveButton" Content="Remove" Height="20px" Command="{Binding LoadCommand}"/>
+                </UniformGrid>
             </StackPanel>
-        </GroupBox>
-        <GroupBox x:Name="ReadContacts" Grid.Column="1" Header="Read Contacts">
+            
+        </StackPanel>
+
+        <StackPanel Grid.Column="1">
             <StackPanel Margin="3,3,3,3">
                 <StackPanel Height="60px">
                     <Label Content="Name:"/>
@@ -51,12 +56,7 @@
                     <Label x:Name="ContactEmailLabel" Content="{Binding Email, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"/>
                 </StackPanel>
             </StackPanel>
-        </GroupBox>
-
-        <UniformGrid Columns="2" Grid.Column="1" Grid.Row="1" Margin="0,5,0,0">
-            <Button x:Name="SaveButton" Content="Save" Height="auto" Margin="0,0,5,0" Command="{Binding SaveCommand}" IsEnabled="{Binding IsSaveEnabled}"/>
-            <Button x:Name="LoadButton" Content="Load" Height="auto" Command="{Binding LoadCommand}"/>
-        </UniformGrid>
+        </StackPanel>
 
     </Grid>
 </Window>
