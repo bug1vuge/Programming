@@ -11,57 +11,25 @@ namespace Contacts.Model
     /// </summary>
     internal class Contact
     {
-
-        /// <summary>
-        /// Хранит имя контакта.
-        /// </summary>
-        private string _name = "";
-
-        /// <summary>
-        /// Хранит номер телефона контакта.
-        /// </summary>
-        private string _number = "";
-
-        /// <summary>
-        /// Хранит адрес электронной почты контакта
-        /// </summary>
-        private string _email = "";
-
         /// <summary>
         /// Задает или возвращает имя контакта.
         /// </summary>
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        }
+        public string Name { get; set; }
 
         /// <summary>
         /// Задает или возвращает номер телефона контакта.
         /// </summary>
-        public string Number
-        {
-            get => _number;
-            set => _number = value;
-        }
+        public string Number { get; set; }
 
         /// <summary>
         /// Задает или возвращает адрес электронной почты контакта.
         /// </summary>
-        public string Email
-        {
-            get => _email;
-            set => _email = value;
-        }
-
+        public string Email { get; set; }
 
         /// <summary>
         /// Конструктор по умолчанию класса <see cref="Contact"./>
         /// </summary>
-        public Contact()
-        {
-
-        }
+        public Contact() { }
 
         /// <summary>
         /// Конструктор с параметрами класса <see cref="Contact"./>

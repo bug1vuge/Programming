@@ -17,6 +17,11 @@ namespace Contacts.ViewModel
     internal class ModalVM : INotifyPropertyChanged
     {
         /// <summary>
+        /// Задает или возвращает объект класса <see cref="Contact"./>
+        /// </summary>
+        public Contact Contact{ get; set; }
+
+        /// <summary>
         /// Содержит имя контакта.
         /// </summary>
         private string _name = "";
@@ -33,11 +38,6 @@ namespace Contacts.ViewModel
 
 
         /// <summary>
-        /// Содержит экземпляр класса <see cref="Contact"./>
-        /// </summary>
-        private Contact _contact = null;
-
-        /// <summary>
         /// Хранит экземпляр класса <see cref="ContactSerializer"./>
         /// </summary>
         private ContactSerializer _serializer = new ContactSerializer();
@@ -46,7 +46,6 @@ namespace Contacts.ViewModel
         /// Хранит значение, которое указывает на то, включена ли кнопка сохранения данных в файл или нет.
         /// </summary>
         private bool _isSaveButtonEnabled = false;
-
 
         /// <summary>
         /// Хранит экземпляр объекта <see cref="SaveCommand"./>
@@ -57,8 +56,6 @@ namespace Contacts.ViewModel
         /// Хранит экземпляр объекта <see cref="LoadCommand"./>
         /// </summary>
         public LoadCommand LoadCommand { get; } = null;
-
-
 
         /// <summary>
         /// Задает или возваращет имя контакта.
@@ -103,16 +100,6 @@ namespace Contacts.ViewModel
         }
 
         /// <summary>
-        /// Задает или возвращает объект класса <see cref="Contact"./>
-        /// </summary>
-        public Contact Contact
-        {
-            get => _contact;
-            set => _contact = value;
-        }
-
-
-        /// <summary>
         /// Конструктор класса <see cref="ModalVM"./>
         /// </summary>
         public ModalVM()
@@ -126,7 +113,7 @@ namespace Contacts.ViewModel
         /// </summary>
         public void InitializeContact()
         {
-            _contact = new Contact(Name, PhoneNumber, Email);
+            Contact = new Contact(Name, PhoneNumber, Email);
         }
 
         /// <summary>
@@ -162,7 +149,6 @@ namespace Contacts.ViewModel
                             !string.IsNullOrWhiteSpace(Email);
         }
 
-
         /// <summary>
         /// Метод для заполнения значений полей данными из объекта Contact.
         /// </summary>
@@ -177,9 +163,15 @@ namespace Contacts.ViewModel
             }
         }
 
-
+        /// <summary>
+        /// Обработчик события на изменение значения текстового поля.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Вызывается при изменении значения свойства объекта.
+        /// </summary>
+        /// <param name="propertyName">Поле, в котором произошло изменение.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

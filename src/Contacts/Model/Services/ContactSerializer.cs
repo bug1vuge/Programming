@@ -14,7 +14,6 @@ namespace Contacts.Model.Services
     /// </summary>
     internal class ContactSerializer
     {
-
         /// <summary>
         /// Задает или возвращает путь к файлу.
         /// </summary>
@@ -26,14 +25,12 @@ namespace Contacts.Model.Services
         /// <param name="contact">Экземпляр объекта <see cref="Contact"./></param>
         public void SaveContact(Contact contact)
         {
-            
             Directory.CreateDirectory(Path.GetDirectoryName(FilePath));
 
             string json = JsonConvert.SerializeObject(contact);
             File.WriteAllText(FilePath, json);
 
             MessageBox.Show("Данных успешно сохранены!");
-
         }
 
         /// <summary>
@@ -42,7 +39,6 @@ namespace Contacts.Model.Services
         /// <returns>Данные контакта.</returns>
         public Contact LoadContact()
         {
-
             if (!File.Exists(FilePath))
             {
                 return null;
@@ -50,7 +46,6 @@ namespace Contacts.Model.Services
 
             string json = File.ReadAllText(FilePath);
             return JsonConvert.DeserializeObject<Contact>(json);
-
         }
     }
 }

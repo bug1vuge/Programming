@@ -15,33 +15,14 @@ namespace Contacts.ViewModel
     internal class LoadCommand : ICommand
     {
         /// <summary>
-        /// Содержит экземпляр класса <see cref="ContactSerializer"./>
-        /// </summary>
-        private ContactSerializer _serializer;
-
-        /// <summary>
-        /// Содержит экземпляр класса <see cref="ModalVM"./>
-        /// </summary>
-        private ModalVM _viewModel;
-
-        /// <summary>
         /// Задает или возвараешь экземпляр класса <see cref="ContactSerializer"./>
         /// </summary>
-        public ContactSerializer Serializer
-        {
-            get => _serializer;
-            set => _serializer = value;
-        }
+        public ContactSerializer Serializer { get; set; }
 
         /// <summary>
         /// Задает или возвараешь экземпляр класса <see cref="ModalVM"./>
         /// </summary>
-        public ModalVM ViewModel
-        {
-            get => _viewModel;
-            set => _viewModel = value;
-        }
-
+        public ModalVM ViewModel { get; set; }
 
         /// <summary>
         /// Констуктор с параметрами для класса <see cref="LoadCommand"./>
@@ -74,7 +55,9 @@ namespace Contacts.ViewModel
             ViewModel.PopulateFieldsFromContact(ViewModel.Contact);
         }
 
+        /// <summary>
+        /// Событие, которое сигнализирует об изменении возможности выполнения команды.
+        /// </summary>
         public event EventHandler CanExecuteChanged;
-
     }
 }
