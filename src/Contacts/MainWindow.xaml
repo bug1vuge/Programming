@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Contacts.ViewModel"
         mc:Ignorable="d"
-        Title="Contacts" Height="450" Width="800" MinWidth="600" MinHeight="400">
+        Title="Contacts" Height="450" Width="800" MinWidth="800" MinHeight="400" MaxWidth="1000" MaxHeight="600">
     <Window.DataContext>
         <local:ModalVM/>
     </Window.DataContext>
@@ -17,46 +17,104 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Margin="0,0,5,0">
-            <StackPanel Margin="3,3,3,3">
-                <Grid>
+        <Grid Grid.Column="0" Margin="0,0,10,0">
 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30px"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="25px"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="35px"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Column="0" Content="Find:"/>
-                    <TextBox Grid.Column="1" x:Name="ContactSearchTextbox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Height="30px" Margin="5,0,0,0" VerticalContentAlignment="Center"/>
+                    <TextBox Grid.Column="1" x:Name="ContactSearchTextbox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Height="25px" Margin="5,0,0,0" VerticalContentAlignment="Center"/>
                 </Grid>
-                <StackPanel Height="60px">
-                    
-                </StackPanel>
-                <UniformGrid Columns="3" Margin="0,0,0,0">
-                    <Button x:Name="AddButton" Content="Add" Height="20px" Command="{Binding SaveCommand}" IsEnabled="{Binding IsSaveEnabled}"/>
-                    <Button x:Name="EditButton" Content="Edit" Height="20px" Command="{Binding LoadCommand}"/>
-                    <Button x:Name="RemoveButton" Content="Remove" Height="20px" Command="{Binding LoadCommand}"/>
-                </UniformGrid>
-            </StackPanel>
-            
-        </StackPanel>
 
-        <StackPanel Grid.Column="1">
-            <StackPanel Margin="3,3,3,3">
-                <StackPanel Height="60px">
+                <Grid Grid.Row="1" Margin="0,3,0,3">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Grid.Row="0">
+                        <ListBoxItem></ListBoxItem>
+                    </ListBox>
+                    
+                </Grid>
+
+
+                <UniformGrid Grid.Row="2" Columns="3" Margin="0,0,0,0">
+                    <Button x:Name="AddButton" Content="Add" Height="auto" Command="{Binding SaveCommand}" IsEnabled="{Binding IsSaveEnabled}"/>
+                    <Button x:Name="EditButton" Content="Edit" Height="auto" Command="{Binding LoadCommand}"/>
+                    <Button x:Name="RemoveButton" Content="Remove" Height="auto" Command="{Binding LoadCommand}"/>
+                </UniformGrid>
+
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Column="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120px"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Grid Grid.Column="0" Margin="5,0,5,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="125px"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="0,25,0,0">
+                    <Image Source="D:\university\OOP\Programming\src\Contacts\images\contact.png" Width="100" Height="100" Stretch="Fill"/>
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Column="1">
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70px"/>
+                    <RowDefinition Height="70px"/>
+                    <RowDefinition Height="70px"/>
+                    <RowDefinition Height="30px"/>
+                </Grid.RowDefinitions>
+                
+                <StackPanel Grid.Row="0" Height="100">
                     <Label Content="Name:"/>
-                    <Label x:Name="ContactNameLabel" Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"/>
+                    <TextBox TextWrapping="Wrap" Height="25px" VerticalContentAlignment="Center" Margin="5,0,0,0" IsReadOnly="True"/>
                 </StackPanel>
-                <StackPanel Height="60px">
+
+                <StackPanel Grid.Row="1" Height="100">
                     <Label Content="Phone Number:"/>
-                    <Label x:Name="ContactPhoneLabel" Content="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"/>
+                    <TextBox TextWrapping="Wrap" Height="25px" VerticalContentAlignment="Center" Margin="5,0,0,0" IsReadOnly="True"/>
                 </StackPanel>
-                <StackPanel Height="60px">
+
+                <StackPanel Grid.Row="2" Height="100">
                     <Label Content="Email:"/>
-                    <Label x:Name="ContactEmailLabel" Content="{Binding Email, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"/>
+                    <TextBox TextWrapping="Wrap" Height="25px" VerticalContentAlignment="Center" Margin="5,0,0,0" IsReadOnly="True"/>
                 </StackPanel>
-            </StackPanel>
-        </StackPanel>
+
+                <StackPanel Grid.Row="3" Height="30px" HorizontalAlignment="Left">
+                    <Button Content="Apply" Width="100px" Height="30px" Margin="5,0,0,0" Visibility="Hidden"/>
+                </StackPanel>
+                
+            </Grid>
+
+        </Grid>
 
     </Grid>
 </Window>

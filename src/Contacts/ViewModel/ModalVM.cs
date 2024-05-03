@@ -37,6 +37,8 @@ namespace Contacts.ViewModel
         /// </summary>
         private Contact _contact = null;
 
+
+
         /// <summary>
         /// Хранит экземпляр класса <see cref="ContactSerializer"./>
         /// </summary>
@@ -59,6 +61,11 @@ namespace Contacts.ViewModel
         public LoadCommand LoadCommand { get; } = null;
 
 
+        /// <summary>
+        /// Содержит список контактов.
+        /// </summary>
+        private List<Contact> Contacts { get; set; } = new List<Contact>();
+
 
         /// <summary>
         /// Задает или возваращет имя контакта.
@@ -70,7 +77,6 @@ namespace Contacts.ViewModel
             {
                 _name = value;
                 OnPropertyChanged(nameof(Name));
-                UpdateSaveEnabled();
             }
         }
 
@@ -84,7 +90,6 @@ namespace Contacts.ViewModel
             {
                 _phoneNumber = value;
                 OnPropertyChanged(nameof(PhoneNumber));
-                UpdateSaveEnabled();
             }
         }
 
@@ -98,7 +103,6 @@ namespace Contacts.ViewModel
             {
                 _email = value;
                 OnPropertyChanged(nameof(Email));
-                UpdateSaveEnabled();
             }
         }
 
@@ -127,39 +131,6 @@ namespace Contacts.ViewModel
         public void InitializeContact()
         {
             _contact = new Contact(Name, PhoneNumber, Email);
-        }
-
-        /// <summary>
-        /// Метод, который очищает поля формы.
-        /// </summary>
-        public void ClearFields()
-        {
-            Name = "";
-            PhoneNumber = "";
-            Email = "";
-        }
-
-        /// <summary>
-        /// Задает или возваращет значение, описывающее активна ли кнопка сохранения данных в файл или нет.
-        /// </summary>
-        public bool IsSaveEnabled
-        {
-            get => _isSaveButtonEnabled;
-            set
-            {
-                _isSaveButtonEnabled = value;
-                OnPropertyChanged(nameof(IsSaveEnabled));
-            }
-        }
-
-        /// <summary>
-        /// Метод для проверки заполненности полей.
-        /// </summary>
-        private void UpdateSaveEnabled()
-        {
-            IsSaveEnabled = !string.IsNullOrWhiteSpace(Name) &&
-                            !string.IsNullOrWhiteSpace(PhoneNumber) &&
-                            !string.IsNullOrWhiteSpace(Email);
         }
 
 
