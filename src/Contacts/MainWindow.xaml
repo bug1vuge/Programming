@@ -9,11 +9,15 @@
     <Window.DataContext>
         <local:ModalVM/>
     </Window.DataContext>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
     <Grid Margin="5,5,5,5">
 
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="220px"/>
+            <ColumnDefinition Width="220px" MinWidth="180px" MaxWidth="300px"/>
+            <ColumnDefinition Width="3px"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -38,7 +42,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Column="0" Content="Find:"/>
-                    <TextBox Grid.Column="1" x:Name="ContactSearchTextbox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Height="25px" Margin="5,0,0,0" VerticalContentAlignment="Center"/>
+                    <TextBox Grid.Column="1" x:Name="ContactSearchTextbox" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Height="25px" Margin="5,0,0,0" VerticalContentAlignment="Center"/>
                 </Grid>
 
                 <Grid Grid.Row="1" Margin="0,3,0,3">
@@ -47,24 +51,32 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <ListBox Grid.Row="0">
-                        <ListBoxItem></ListBoxItem>
+                    <ListBox Grid.Row="0" ItemsSource="{Binding FilteredContacts}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
-                    
+
                 </Grid>
 
 
                 <UniformGrid Grid.Row="2" Columns="3" Margin="0,0,0,0">
-                    <Button x:Name="AddButton" Content="Add" Height="auto" Command="{Binding SaveCommand}" IsEnabled="{Binding IsSaveEnabled}"/>
-                    <Button x:Name="EditButton" Content="Edit" Height="auto" Command="{Binding LoadCommand}"/>
-                    <Button x:Name="RemoveButton" Content="Remove" Height="auto" Command="{Binding LoadCommand}"/>
+                    <Button x:Name="AddButton" Content="Add" Height="auto" Command="{Binding AddCommand}" IsEnabled="{Binding IsAddButtonEnabled}"/>
+                    <Button x:Name="EditButton" Content="Edit" Height="auto" Command="{Binding EditCommand}" IsEnabled="{Binding IsEditButtonEnabled}"/>
+                    <Button x:Name="RemoveButton" Content="Remove" Height="auto" Command="{Binding RemoveCommand}" IsEnabled="{Binding IsRemoveButtonEnabled}"/>
                 </UniformGrid>
 
             </Grid>
 
         </Grid>
 
-        <Grid Grid.Column="1">
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext" Background="LightGray"/>
+
+        <Grid Grid.Column="2" Margin="10,0,0,0">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120px"/>
@@ -95,23 +107,25 @@
                 
                 <StackPanel Grid.Row="0" Height="100">
                     <Label Content="Name:"/>
-                    <TextBox TextWrapping="Wrap" Height="25px" VerticalContentAlignment="Center" Margin="5,0,0,0" IsReadOnly="True"/>
+                    <TextBox TextWrapping="Wrap" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Height="25px" VerticalContentAlignment="Center" Margin="5,0,0,0" IsReadOnly="{Binding IsReadOnly}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Height="100">
                     <Label Content="Phone Number:"/>
-                    <TextBox TextWrapping="Wrap" Height="25px" VerticalContentAlignment="Center" Margin="5,0,0,0" IsReadOnly="True"/>
+                    <TextBox TextWrapping="Wrap" Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}" Height="25px" VerticalContentAlignment="Center" Margin="5,0,0,0" IsReadOnly="{Binding IsReadOnly}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Height="100">
                     <Label Content="Email:"/>
-                    <TextBox TextWrapping="Wrap" Height="25px" VerticalContentAlignment="Center" Margin="5,0,0,0" IsReadOnly="True"/>
+                    <TextBox TextWrapping="Wrap" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Height="25px" VerticalContentAlignment="Center" Margin="5,0,0,0" IsReadOnly="{Binding IsReadOnly}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Height="30px" HorizontalAlignment="Left">
-                    <Button Content="Apply" Width="100px" Height="30px" Margin="5,0,0,0" Visibility="Hidden"/>
+                    <Button x:Name="ApplyButton" Content="Apply" Width="100px" Height="30px" Margin="5,0,0,0"
+                            Command="{Binding ApplyCommand}"
+                            Visibility="{Binding IsApplyButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
                 </StackPanel>
-                
+
             </Grid>
 
         </Grid>

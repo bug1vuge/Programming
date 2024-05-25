@@ -5,52 +5,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Newtonsoft.Json; 
+using Newtonsoft.Json;
 
 namespace Contacts.Model.Services
 {
     /// <summary>
-    /// Описывает сериализацию класса <see cref="Contact"./>
+    /// Описывает сериализацию контактов.
     /// </summary>
     internal class ContactSerializer
     {
-
         /// <summary>
         /// Задает или возвращает путь к файлу.
         /// </summary>
         public string FilePath { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Contacts", "contacts.json");
 
         /// <summary>
-        /// Сохраняет данные контакта в файл.
+        /// Сохраняет коллекцию контактов в файл.
         /// </summary>
-        /// <param name="contact">Экземпляр объекта <see cref="Contact"./></param>
-        public void SaveContact(Contact contact)
+        /// <param name="contacts">Коллекция объектов <see cref="Contact"/>.</param>
+        public void SaveContacts(IEnumerable<Contact> contacts)
         {
-            
             Directory.CreateDirectory(Path.GetDirectoryName(FilePath));
 
-            string json = JsonConvert.SerializeObject(contact);
+            string json = JsonConvert.SerializeObject(contacts);
             File.WriteAllText(FilePath, json);
 
-            MessageBox.Show("Данных успешно сохранены!");
-
+            MessageBox.Show("Данные успешно сохранены!");
         }
 
         /// <summary>
-        /// Загружает данные контакта из файла.
+        /// Загружает коллекцию контактов из файла.
         /// </summary>
-        /// <returns>Данные контакта.</returns>
-        public Contact LoadContact()
+        /// <returns>Коллекция контактов.</returns>
+        public IEnumerable<Contact> LoadContacts()
         {
-
             if (!File.Exists(FilePath))
             {
-                return null;
+                return Enumerable.Empty<Contact>();
             }
 
             string json = File.ReadAllText(FilePath);
-            return JsonConvert.DeserializeObject<Contact>(json);
-
+            return JsonConvert.DeserializeObject<List<Contact>>(json);
         }
     }
 }

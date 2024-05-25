@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,23 +11,22 @@ namespace Contacts.Model
     /// <summary>
     /// Хранит поля и методы, описывающие контакт.
     /// </summary>
-    internal class Contact
+    internal class Contact : INotifyPropertyChanged
     {
-
         /// <summary>
         /// Хранит имя контакта.
         /// </summary>
-        private string _name = "";
+        private string _name = String.Empty;
 
         /// <summary>
         /// Хранит номер телефона контакта.
         /// </summary>
-        private string _number = "";
+        private string _number = String.Empty;
 
         /// <summary>
-        /// Хранит адрес электронной почты контакта
+        /// Хранит email-адрес контакта.
         /// </summary>
-        private string _email = "";
+        private string _email = String.Empty;
 
         /// <summary>
         /// Задает или возвращает имя контакта.
@@ -33,7 +34,14 @@ namespace Contacts.Model
         public string Name
         {
             get => _name;
-            set => _name = value;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -42,7 +50,14 @@ namespace Contacts.Model
         public string Number
         {
             get => _number;
-            set => _number = value;
+            set
+            {
+                if (_number != value)
+                {
+                    _number = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -51,9 +66,15 @@ namespace Contacts.Model
         public string Email
         {
             get => _email;
-            set => _email = value;
+            set
+            {
+                if (_email != value)
+                {
+                    _email = value;
+                    OnPropertyChanged();
+                }
+            }
         }
-
 
         /// <summary>
         /// Конструктор по умолчанию класса <see cref="Contact"./>
@@ -74,6 +95,20 @@ namespace Contacts.Model
             Name = name;
             Number = number;
             Email = email;
+        }
+
+        /// <summary>
+        /// Описывает событие при изменении значения.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Метод, который вызывается при изменении значения свойства. 
+        /// </summary>
+        /// <param propertyName="propertyName">Название свойства.</param>
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }
