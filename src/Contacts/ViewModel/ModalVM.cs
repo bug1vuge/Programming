@@ -19,6 +19,11 @@ namespace Contacts.ViewModel
     internal class ModalVM : INotifyPropertyChanged
     {
         /// <summary>
+        /// Задает или возвращает объект класса <see cref="Contact"./>
+        /// </summary>
+        public Contact Contact{ get; set; }
+
+        /// <summary>
         /// Содержит имя контакта.
         /// </summary>
         private string _name = string.Empty;
@@ -68,15 +73,7 @@ namespace Contacts.ViewModel
         /// </summary>
         private ObservableCollection<Contact> _contacts = new ObservableCollection<Contact>();
 
-        /// <summary>
-        /// Содержит список найденных контактов.
-        /// </summary>
-        private ObservableCollection<Contact> _filteredContacts = new ObservableCollection<Contact>();
 
-        /// <summary>
-        /// Задает или возвращает экземпляр класса <see cref="ContactSerializer"/>
-        /// </summary>
-        public ContactSerializer ContactSerializer {  get; set; } = new ContactSerializer();
 
         /// <summary>
         /// Содержит флаг видимости кнопки "Apply".

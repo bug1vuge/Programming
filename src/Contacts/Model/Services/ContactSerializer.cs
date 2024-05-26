@@ -44,6 +44,8 @@ namespace Contacts.Model.Services
 
             string json = File.ReadAllText(FilePath);
             return JsonConvert.DeserializeObject<List<Contact>>(json);
+
+
         }
     }
 }
