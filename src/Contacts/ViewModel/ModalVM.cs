@@ -458,6 +458,9 @@ namespace Contacts.ViewModel
                     Name = string.Empty;
                     PhoneNumber = string.Empty;
                     Email = string.Empty;
+
+                    UpdateEditButtonEnabled(null);
+                    UpdateRemoveButtonEnabled(null);
                 }
                 else
                 {
