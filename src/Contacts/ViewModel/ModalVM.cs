@@ -21,22 +21,22 @@ namespace Contacts.ViewModel
         /// <summary>
         /// Содержит имя контакта.
         /// </summary>
-        private string _name = String.Empty;
+        private string _name = string.Empty;
 
         /// <summary>
         /// Содержит номер телефона контакта.
         /// </summary>
-        private string _phoneNumber = String.Empty;
+        private string _phoneNumber = string.Empty;
 
         /// <summary>
         /// Содержит адрес электронной почты контакта.
         /// </summary>
-        private string _email = String.Empty;
+        private string _email = string.Empty;
 
         /// <summary>
         /// Содержит значение для поиска.
         /// </summary>
-        private string _searchText = String.Empty;
+        private string _searchText = string.Empty;
 
         /// <summary>
         /// Содержит выбранный контакт.
@@ -44,24 +44,24 @@ namespace Contacts.ViewModel
         private Contact _selectedContact = new Contact();
 
         /// <summary>
-        /// Хранит экземпляр объекта <see cref="AddCommand"./>
+        /// Хранит экземпляр объекта <see cref="ICommand"./>
         /// </summary>
-        public AddCommand AddCommand { get; } = null;
+        public ICommand AddCommand { get; } = null;
 
         /// <summary>
-        /// Хранит экземпляр объекта <see cref="ApplyCommand"./>
+        /// Хранит экземпляр объекта <see cref="ICommand"./>
         /// </summary>
-        public ApplyCommand ApplyCommand { get; } = null;
+        public ICommand ApplyCommand { get; } = null;
 
         /// <summary>
-        /// Хранит экземпляр объекта <see cref="EditCommand"./>
+        /// Хранит экземпляр объекта <see cref="ICommand"./>
         /// </summary>
-        public EditCommand EditCommand { get; } = null;
+        public ICommand EditCommand { get; } = null;
 
         /// <summary>
-        /// Хранит экземпляр объекта <see cref="RemoveCommand"./>
+        /// Хранит экземпляр объекта <see cref="ICommand"./>
         /// </summary>
-        public RemoveCommand RemoveCommand { get; } = null;
+        public ICommand RemoveCommand { get; } = null;
 
         /// <summary>
         /// Содержит список контактов.
@@ -302,19 +302,19 @@ namespace Contacts.ViewModel
         /// </summary>
         public ModalVM()
         {
-            AddCommand = new AddCommand(this);
-            ApplyCommand = new ApplyCommand(this);
-            EditCommand = new EditCommand(this);
-            RemoveCommand = new RemoveCommand(this);
+            AddCommand = new RelayCommand(_ => AddContact(), _ => IsAddButtonEnabled);
+            EditCommand = new RelayCommand(_ => EditContact(), _ => IsEditButtonEnabled);
+            RemoveCommand = new RelayCommand(_ => RemoveContact(), _ => IsRemoveButtonEnabled);
+            ApplyCommand = new RelayCommand(_ => ApplyContact());
 
-            _contacts = new ObservableCollection<Contact>
+            Contacts = new ObservableCollection<Contact>
             {
                 new Contact("John Doe", "123-456-7890", "john@example.com"),
                 new Contact("Jane Smith", "456-789-0123", "jane@example.com"),
                 new Contact("Mike Johnson", "789-012-3456", "mike@example.com")
             };
 
-            _filteredContacts = new ObservableCollection<Contact>(_contacts); ;
+            FilteredContacts = new ObservableCollection<Contact>(Contacts); ;
         }
 
         /// <summary>
@@ -365,9 +365,9 @@ namespace Contacts.ViewModel
         /// </summary>
         public void AddContact()
         {
-            Name = "";
-            PhoneNumber = "";
-            Email = "";
+            Name = string.Empty;
+            PhoneNumber = string.Empty;
+            Email = string.Empty;
 
             SelectedContact = null;
 
@@ -401,7 +401,7 @@ namespace Contacts.ViewModel
             }
             else
             {
-                if (Name != "" && PhoneNumber != "" && Email != "") 
+                if (Name != string.Empty && PhoneNumber != string.Empty && Email != string.Empty) 
                 {
                     Contact newContact = new Contact(Name, PhoneNumber, Email);
 
@@ -483,9 +483,9 @@ namespace Contacts.ViewModel
         /// </summary>
         private void CancelNewContact()
         {
-            Name = "";
-            PhoneNumber = "";
-            Email = "";
+            Name = string.Empty;
+            PhoneNumber = string.Empty;
+            Email = string.Empty;
             IsReadOnly = true;
             IsApplyButtonVisible = false;
             IsCreatingNewContact = false;

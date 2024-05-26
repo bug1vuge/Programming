@@ -16,17 +16,17 @@ namespace Contacts.Model
         /// <summary>
         /// Хранит имя контакта.
         /// </summary>
-        private string _name = String.Empty;
+        private string _name = string.Empty;
 
         /// <summary>
         /// Хранит номер телефона контакта.
         /// </summary>
-        private string _number = String.Empty;
+        private string _number = string.Empty;
 
         /// <summary>
         /// Хранит email-адрес контакта.
         /// </summary>
-        private string _email = String.Empty;
+        private string _email = string.Empty;
 
         /// <summary>
         /// Задает или возвращает имя контакта.
@@ -79,10 +79,7 @@ namespace Contacts.Model
         /// <summary>
         /// Конструктор по умолчанию класса <see cref="Contact"./>
         /// </summary>
-        public Contact()
-        {
-
-        }
+        public Contact() { }
 
         /// <summary>
         /// Конструктор с параметрами класса <see cref="Contact"./>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Contacts.ViewModel"
         mc:Ignorable="d"
-        Title="Contacts" Height="450" Width="800" MinWidth="800" MinHeight="400" MaxWidth="1000" MaxHeight="600">
+        Title="Contacts" Height="450" Width="800" MinWidth="800" MinHeight="400" MaxWidth="1000" MaxHeight="600" Icon="/preview.png">
     <Window.DataContext>
         <local:ModalVM/>
     </Window.DataContext>
@@ -91,7 +91,7 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0" Margin="0,25,0,0">
-                    <Image Source="D:\university\OOP\Programming\src\Contacts\images\contact.png" Width="100" Height="100" Stretch="Fill"/>
+                    <Image Source="/contact.png" Width="100" Height="100" Stretch="Fill"/>
                 </StackPanel>
 
             </Grid>

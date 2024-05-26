@@ -29,8 +29,6 @@ namespace Contacts.Model.Services
 
             string json = JsonConvert.SerializeObject(contacts);
             File.WriteAllText(FilePath, json);
-
-            MessageBox.Show("Данные успешно сохранены!");
         }
 
         /// <summary>
