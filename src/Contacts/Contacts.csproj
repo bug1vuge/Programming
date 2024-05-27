@@ -59,9 +59,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Services\ContactSerializer.cs" />
-    <Compile Include="ViewModel\LoadCommand.cs" />
     <Compile Include="ViewModel\ModalVM.cs" />
-    <Compile Include="ViewModel\SaveCommand.cs" />
+    <Compile Include="ViewModel\RelayCommand.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -103,6 +102,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="contact.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
