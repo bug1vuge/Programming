@@ -44,11 +44,6 @@ namespace Contacts.ViewModel
         private string _searchText = string.Empty;
 
         /// <summary>
-        /// Содержит выбранный контакт.
-        /// </summary>
-        private Contact _selectedContact = new Contact();
-
-        /// <summary>
         /// Хранит экземпляр объекта <see cref="ICommand"./>
         /// </summary>
         public ICommand AddCommand { get; } = null;
@@ -73,7 +68,20 @@ namespace Contacts.ViewModel
         /// </summary>
         private ObservableCollection<Contact> _contacts = new ObservableCollection<Contact>();
 
+        /// <summary>
+        /// Содержит список отфильтрованных контактов.
+        /// </summary>
+        private ObservableCollection<Contact> _filteredContacts = new ObservableCollection<Contact>();
 
+        /// <summary>
+        /// Содержит выбранный контакт.
+        /// </summary>
+        private Contact _selectedContact = new Contact();
+
+        /// <summary>
+        /// Содержит экземпляр класса <see cref="ContactSerializer"./>
+        /// </summary>
+        public ContactSerializer ContactSerializer { get; set; } = new ContactSerializer();
 
         /// <summary>
         /// Содержит флаг видимости кнопки "Apply".
