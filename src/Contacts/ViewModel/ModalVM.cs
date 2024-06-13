@@ -16,7 +16,7 @@ namespace Contacts.ViewModel
     /// <summary>
     /// Описывает VM главного окна.
     /// </summary>
-    internal class ModalVM : INotifyPropertyChanged
+    internal class ModalVM : INotifyPropertyChanged, IDataErrorInfo
     {
         /// <summary>
         /// Задает или возвращает объект класса <see cref="Contact"./>
@@ -42,6 +42,11 @@ namespace Contacts.ViewModel
         /// Содержит значение для поиска.
         /// </summary>
         private string _searchText = string.Empty;
+
+        /// <summary>
+        /// Содержит сообщение об ошибке валидации.
+        /// </summary>
+        public string Error { get; set; } = string.Empty;
 
         /// <summary>
         /// Хранит экземпляр объекта <see cref="ICommand"./>
@@ -113,6 +118,31 @@ namespace Contacts.ViewModel
         /// </summary>
         private bool _isRemoveButtonEnabled = false;
 
+        /// <summary>
+        /// Хранит флаг доступности применения изменений контакта.
+        /// </summary>
+        private bool _isApplyButtonEnabled = false;
+
+        /// <summary>
+        /// Содержит флаг наличия ошибок валидации.
+        /// </summary>
+        private bool _isHasValidationErrors = true;
+
+        /// <summary>
+        /// Задает или возвращает флаг, указывающий на ошибки валидации.
+        /// </summary>
+        public bool IsHasValidationErrors
+        {
+            get => _isHasValidationErrors;
+            set
+            {
+                if (_isHasValidationErrors != value)
+                {
+                    _isHasValidationErrors = value;
+                    OnPropertyChanged(nameof(IsApplyButtonEnabled));
+                }
+            }
+        }
 
         /// <summary>
         /// Задает или возвращает имя контакта.
@@ -124,6 +154,7 @@ namespace Contacts.ViewModel
             {
                 _name = value;
                 OnPropertyChanged(nameof(Name));
+                UpdateApplyButtonEnabled();
             }
         }
 
@@ -137,6 +168,7 @@ namespace Contacts.ViewModel
             {
                 _phoneNumber = value;
                 OnPropertyChanged(nameof(PhoneNumber));
+                UpdateApplyButtonEnabled();
             }
         }
 
@@ -150,6 +182,7 @@ namespace Contacts.ViewModel
             {
                 _email = value;
                 OnPropertyChanged(nameof(Email));
+                UpdateApplyButtonEnabled();
             }
         }
 
@@ -182,6 +215,11 @@ namespace Contacts.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// Возвращает флаг, указывающий доступна ли кнопки применения или нет.
+        /// </summary>
+        public bool IsApplyButtonEnabled => !IsHasValidationErrors;
 
         /// <summary>
         /// Задает или возвращает флаг доступности добавления контакта.
@@ -319,7 +357,67 @@ namespace Contacts.ViewModel
                 new Contact("Mike Johnson", "789-012-3456", "mike@example.com")
             };
 
-            FilteredContacts = new ObservableCollection<Contact>(Contacts); ;
+            FilteredContacts = new ObservableCollection<Contact>(Contacts);
+
+            SelectedContact = Contacts[0];
+        }
+
+
+        /// <summary>
+        /// Возвращает сообщение об ошибке.
+        /// </summary>
+        /// <param name="columnName">Имя свойства.</param>
+        /// <returns></returns>
+        public string this[string columnName]
+        {
+            get
+            {
+                Error = null;
+
+                switch (columnName)
+                {
+                    case nameof(Name):
+
+                        if (Name.Length > 100)
+                        {
+                            Error = "Name must be non-empty and not longer than 100 characters.";
+                        }
+
+                        break;
+
+                    case nameof(PhoneNumber):
+
+                        if (PhoneNumber.Length > 100 || !System.Text.RegularExpressions.Regex.IsMatch(PhoneNumber, @"^[0-9\+\-\(\) ]+$") && !string.IsNullOrEmpty(PhoneNumber))
+                        {
+                            Error = "PhoneNumber must be non-empty, not longer than 100 characters, and can only contain digits and the symbols +-()";
+                        }
+
+                        break;
+
+                    case nameof(Email):
+
+                        if (Email.Length > 100 || !Email.Contains("@") && !string.IsNullOrEmpty(PhoneNumber))
+                        {
+                            Error = "Email must be non-empty, not longer than 100 characters, and must contain '@'";
+                        }
+
+                        break;
+
+                }
+
+                return Error;
+            }
+        }
+
+
+        /// <summary>
+        /// Задает или возвращает флаг доступности кнопки добавления контакта.
+        /// </summary>
+        private void UpdateApplyButtonEnabled()
+        {
+            IsHasValidationErrors = !string.IsNullOrEmpty(this[nameof(Name)]) ||
+                                    !string.IsNullOrEmpty(this[nameof(PhoneNumber)]) ||
+                                    !string.IsNullOrEmpty(this[nameof(Email)]);
         }
 
         /// <summary>
