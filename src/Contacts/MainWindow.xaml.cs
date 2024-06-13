@@ -1,4 +1,6 @@
-﻿using Contacts.ViewModel;
+﻿using Contacts.View.Controls;
+using Contacts.ViewModel;
+using Contacts.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace Contacts
 {
@@ -29,9 +32,8 @@ namespace Contacts
             /// Содержит экземпляр класса <see cref="ModalVM"/>
             /// </summary>
             ModalVM viewModel = new ModalVM();
-
+            
             DataContext = viewModel;
-
         }
     }
 }

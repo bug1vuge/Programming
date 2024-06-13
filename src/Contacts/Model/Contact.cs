@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Contacts.Model
 {
@@ -40,6 +41,7 @@ namespace Contacts.Model
                 {
                     _name = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(Name));
                 }
             }
         }
@@ -56,6 +58,7 @@ namespace Contacts.Model
                 {
                     _number = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(Number));
                 }
             }
         }
@@ -72,6 +75,7 @@ namespace Contacts.Model
                 {
                     _email = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(Email));
                 }
             }
         }
@@ -103,7 +107,7 @@ namespace Contacts.Model
         /// Метод, который вызывается при изменении значения свойства. 
         /// </summary>
         /// <param propertyName="propertyName">Название свойства.</param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged(string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
