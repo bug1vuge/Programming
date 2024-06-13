@@ -123,13 +123,14 @@ namespace Contacts.ViewModel
         /// </summary>
         private bool _isApplyButtonEnabled = false;
 
-
         /// <summary>
         /// Содержит флаг наличия ошибок валидации.
         /// </summary>
         private bool _isHasValidationErrors = true;
 
-
+        /// <summary>
+        /// Задает или возвращает флаг, указывающий на ошибки валидации.
+        /// </summary>
         public bool IsHasValidationErrors
         {
             get => _isHasValidationErrors;
@@ -142,7 +143,6 @@ namespace Contacts.ViewModel
                 }
             }
         }
-
 
         /// <summary>
         /// Задает или возвращает имя контакта.
@@ -217,18 +217,8 @@ namespace Contacts.ViewModel
         }
 
         /// <summary>
-        /// Задает или возвращает флаг доступности применения изменений для контакта.
+        /// Возвращает флаг, указывающий доступна ли кнопки применения или нет.
         /// </summary>
-        /*public bool IsApplyButtonEnabled
-        {
-            get => _isApplyButtonEnabled;
-            set
-            {
-                _isApplyButtonEnabled = value;
-                OnPropertyChanged(nameof(IsApplyButtonEnabled));
-            }
-        }*/
-
         public bool IsApplyButtonEnabled => !IsHasValidationErrors;
 
         /// <summary>
@@ -367,7 +357,7 @@ namespace Contacts.ViewModel
                 new Contact("Mike Johnson", "789-012-3456", "mike@example.com")
             };
 
-            FilteredContacts = new ObservableCollection<Contact>(Contacts); 
+            FilteredContacts = new ObservableCollection<Contact>(Contacts);
 
             SelectedContact = Contacts[0];
         }
@@ -387,28 +377,32 @@ namespace Contacts.ViewModel
                 switch (columnName)
                 {
                     case nameof(Name):
-                        if (string.IsNullOrEmpty(Name) || Name.Length > 100)
+
+                        if (Name.Length > 100)
                         {
                             Error = "Name must be non-empty and not longer than 100 characters.";
                         }
-                        else
-                        {
 
-                        }
                         break;
+
                     case nameof(PhoneNumber):
-                        if (string.IsNullOrEmpty(PhoneNumber) || PhoneNumber.Length > 100 ||
-                            !System.Text.RegularExpressions.Regex.IsMatch(PhoneNumber, @"^[0-9\+\-\(\) ]+$"))
+
+                        if (PhoneNumber.Length > 100 || !System.Text.RegularExpressions.Regex.IsMatch(PhoneNumber, @"^[0-9\+\-\(\) ]+$") && !string.IsNullOrEmpty(PhoneNumber))
                         {
                             Error = "PhoneNumber must be non-empty, not longer than 100 characters, and can only contain digits and the symbols +-()";
                         }
+
                         break;
+
                     case nameof(Email):
-                        if (string.IsNullOrEmpty(Email) || Email.Length > 100 || !Email.Contains("@"))
+
+                        if (Email.Length > 100 || !Email.Contains("@") && !string.IsNullOrEmpty(PhoneNumber))
                         {
                             Error = "Email must be non-empty, not longer than 100 characters, and must contain '@'";
                         }
+
                         break;
+
                 }
 
                 return Error;
