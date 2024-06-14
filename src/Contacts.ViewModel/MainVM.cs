@@ -344,6 +344,8 @@ namespace Contacts.ViewModel
         /// </summary>
         public ModalVM()
         {
+            var loadedContacts = ContactSerializer.LoadContacts();
+
             AddCommand = new RelayCommand<object>(_ => AddContact(), _ => IsAddButtonEnabled);
             EditCommand = new RelayCommand<object>(_ => EditContact(), _ => IsEditButtonEnabled);
             RemoveCommand = new RelayCommand<object>(_ => RemoveContact(), _ => IsRemoveButtonEnabled);
@@ -358,7 +360,16 @@ namespace Contacts.ViewModel
 
             FilteredContacts = new ObservableCollection<Contact>(Contacts);
 
-            SelectedContact = Contacts[0];
+            if (loadedContacts != null)
+            {
+                Contacts = new ObservableCollection<Contact>(loadedContacts);
+                FilteredContacts = new ObservableCollection<Contact>(Contacts);
+            }
+
+            if (Contacts.Any())
+            {
+                SelectedContact = Contacts[0];
+            }
         }
 
 
