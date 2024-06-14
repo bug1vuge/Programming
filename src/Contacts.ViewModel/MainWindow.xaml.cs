@@ -1,29 +1,34 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Contacts.Model;
-using Contacts.Model.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Contacts.Model;
 
 namespace Contacts.ViewModel
 {
     /// <summary>
     /// Описывает VM главного окна.
     /// </summary>
-    internal class ModalVM : ObservableObject, IDataErrorInfo
+    public class ModalVM : ObservableObject, IDataErrorInfo
     {
         /// <summary>
         /// Задает или возвращает объект класса <see cref="Contact"./>
         /// </summary>
-        public Contact Contact{ get; set; }
+        public Contact Contact { get; set; }
 
         /// <summary>
         /// Содержит имя контакта.
@@ -285,7 +290,7 @@ namespace Contacts.ViewModel
                 }
 
                 _selectedContact = value;
-                
+
                 if (value != null)
                 {
                     Name = value.Name;
@@ -506,7 +511,7 @@ namespace Contacts.ViewModel
             }
             else
             {
-                if (Name != string.Empty && PhoneNumber != string.Empty && Email != string.Empty) 
+                if (Name != string.Empty && PhoneNumber != string.Empty && Email != string.Empty)
                 {
                     Contact newContact = new Contact(Name, PhoneNumber, Email);
 
@@ -520,8 +525,8 @@ namespace Contacts.ViewModel
                     IsApplyButtonVisible = false;
 
                     ContactSerializer.SaveContacts(Contacts);
-                    OnPropertyChanged(nameof(FilteredContacts));                
-                } 
+                    OnPropertyChanged(nameof(FilteredContacts));
+                }
                 else
                 {
                     IsReadOnly = false;
