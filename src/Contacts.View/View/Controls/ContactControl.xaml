@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Contacts.View.Controls" xmlns:viewmodel="clr-namespace:Contacts.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ModalVM}"
+             xmlns:local="clr-namespace:Contacts.View.Controls" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -29,7 +29,7 @@
                 <RowDefinition Height="125px"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="0,25,0,0">
-                <Image Source="/contact.png" Width="100" Height="100" Stretch="Fill"/>
+                <Image Source="/Images/preview.png" Width="100" Height="100" Stretch="Fill"/>
             </StackPanel>
         </Grid>
 

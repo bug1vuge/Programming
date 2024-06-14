@@ -131,15 +131,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="preview.png" />
+    <Resource Include="Images\preview.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Contacts.Model\Contacts.Model.csproj">
-      <Project>{f324d841-8d6b-412c-a6d7-3766ddd1e5b4}</Project>
+    <ProjectReference Include="..\Contacts\Contacts.Model\Contacts.Model.csproj">
+      <Project>{101e8b8a-5e3f-4b8d-9af4-e659adb225cf}</Project>
       <Name>Contacts.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Contacts.ViewModel\Contacts.ViewModel.csproj">
-      <Project>{8ca6b44c-2df6-46a9-bac9-423fe61b0ea1}</Project>
+    <ProjectReference Include="..\Contacts\Contacts.ViewModel\Contacts.ViewModel.csproj">
+      <Project>{929cb2bc-f147-4e43-8ced-630c1e76a3a5}</Project>
       <Name>Contacts.ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
