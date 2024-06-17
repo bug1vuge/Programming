@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace Contacts.Model
 {
     /// <summary>
     /// Хранит поля и методы, описывающие контакт.
     /// </summary>
-    internal class Contact : INotifyPropertyChanged
+    public class Contact : INotifyPropertyChanged
     {
         /// <summary>
         /// Хранит имя контакта.

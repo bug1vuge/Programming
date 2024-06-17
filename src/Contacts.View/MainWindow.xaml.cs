@@ -17,7 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 
-namespace Contacts
+namespace Contacts.View
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml

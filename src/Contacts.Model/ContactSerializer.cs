@@ -4,20 +4,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using Newtonsoft.Json;
 
-namespace Contacts.Model.Services
+namespace Contacts.Model
 {
     /// <summary>
     /// Описывает сериализацию контактов.
     /// </summary>
-    internal class ContactSerializer
+    public class ContactSerializer
     {
         /// <summary>
         /// Задает или возвращает путь к файлу.
         /// </summary>
-        public string FilePath { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Contacts", "contacts.json");
+        public string FilePath { get; set; } = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Contacts", "contacts.json");
 
         /// <summary>
         /// Сохраняет коллекцию контактов в файл.
@@ -25,7 +24,7 @@ namespace Contacts.Model.Services
         /// <param name="contacts">Коллекция объектов <see cref="Contact"/>.</param>
         public void SaveContacts(IEnumerable<Contact> contacts)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(FilePath));
+            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(FilePath));
 
             string json = JsonConvert.SerializeObject(contacts);
             File.WriteAllText(FilePath, json);
@@ -44,8 +43,6 @@ namespace Contacts.Model.Services
 
             string json = File.ReadAllText(FilePath);
             return JsonConvert.DeserializeObject<List<Contact>>(json);
-
-
         }
     }
 }

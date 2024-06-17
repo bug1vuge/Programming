@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Contacts.Properties
+namespace Contacts.View.Properties
 {
 
 

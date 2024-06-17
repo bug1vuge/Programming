@@ -1,27 +1,26 @@
-﻿using Contacts.Model;
-using Contacts.Model.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Contacts.Model;
 
 namespace Contacts.ViewModel
 {
     /// <summary>
     /// Описывает VM главного окна.
     /// </summary>
-    internal class ModalVM : INotifyPropertyChanged, IDataErrorInfo
+    public class ModalVM : ObservableObject, IDataErrorInfo
     {
         /// <summary>
         /// Задает или возвращает объект класса <see cref="Contact"./>
         /// </summary>
-        public Contact Contact{ get; set; }
+        public Contact Contact { get; set; }
 
         /// <summary>
         /// Содержит имя контакта.
@@ -49,24 +48,24 @@ namespace Contacts.ViewModel
         public string Error { get; set; } = string.Empty;
 
         /// <summary>
-        /// Хранит экземпляр объекта <see cref="ICommand"./>
+        /// Хранит экземпляр объекта <see cref="IRelayCommand "./>
         /// </summary>
-        public ICommand AddCommand { get; } = null;
+        public IRelayCommand AddCommand { get; } = null;
 
         /// <summary>
-        /// Хранит экземпляр объекта <see cref="ICommand"./>
+        /// Хранит экземпляр объекта <see cref="IRelayCommand "./>
         /// </summary>
-        public ICommand ApplyCommand { get; } = null;
+        public IRelayCommand ApplyCommand { get; } = null;
 
         /// <summary>
-        /// Хранит экземпляр объекта <see cref="ICommand"./>
+        /// Хранит экземпляр объекта <see cref="IRelayCommand "./>
         /// </summary>
-        public ICommand EditCommand { get; } = null;
+        public IRelayCommand EditCommand { get; } = null;
 
         /// <summary>
-        /// Хранит экземпляр объекта <see cref="ICommand"./>
+        /// Хранит экземпляр объекта <see cref="IRelayCommand "./>
         /// </summary>
-        public ICommand RemoveCommand { get; } = null;
+        public IRelayCommand RemoveCommand { get; } = null;
 
         /// <summary>
         /// Содержит список контактов.
@@ -283,7 +282,7 @@ namespace Contacts.ViewModel
                 }
 
                 _selectedContact = value;
-                
+
                 if (value != null)
                 {
                     Name = value.Name;
@@ -345,10 +344,12 @@ namespace Contacts.ViewModel
         /// </summary>
         public ModalVM()
         {
-            AddCommand = new RelayCommand(_ => AddContact(), _ => IsAddButtonEnabled);
-            EditCommand = new RelayCommand(_ => EditContact(), _ => IsEditButtonEnabled);
-            RemoveCommand = new RelayCommand(_ => RemoveContact(), _ => IsRemoveButtonEnabled);
-            ApplyCommand = new RelayCommand(_ => ApplyContact());
+            var loadedContacts = ContactSerializer.LoadContacts();
+
+            AddCommand = new RelayCommand<object>(_ => AddContact(), _ => IsAddButtonEnabled);
+            EditCommand = new RelayCommand<object>(_ => EditContact(), _ => IsEditButtonEnabled);
+            RemoveCommand = new RelayCommand<object>(_ => RemoveContact(), _ => IsRemoveButtonEnabled);
+            ApplyCommand = new RelayCommand<object>(_ => ApplyContact());
 
             Contacts = new ObservableCollection<Contact>
             {
@@ -359,7 +360,16 @@ namespace Contacts.ViewModel
 
             FilteredContacts = new ObservableCollection<Contact>(Contacts);
 
-            SelectedContact = Contacts[0];
+            if (loadedContacts != null)
+            {
+                Contacts = new ObservableCollection<Contact>(loadedContacts);
+                FilteredContacts = new ObservableCollection<Contact>(Contacts);
+            }
+
+            if (Contacts.Any())
+            {
+                SelectedContact = Contacts[0];
+            }
         }
 
 
@@ -504,7 +514,7 @@ namespace Contacts.ViewModel
             }
             else
             {
-                if (Name != string.Empty && PhoneNumber != string.Empty && Email != string.Empty) 
+                if (Name != string.Empty && PhoneNumber != string.Empty && Email != string.Empty)
                 {
                     Contact newContact = new Contact(Name, PhoneNumber, Email);
 
@@ -518,14 +528,12 @@ namespace Contacts.ViewModel
                     IsApplyButtonVisible = false;
 
                     ContactSerializer.SaveContacts(Contacts);
-                    OnPropertyChanged(nameof(FilteredContacts));                
-                } 
+                    OnPropertyChanged(nameof(FilteredContacts));
+                }
                 else
                 {
                     IsReadOnly = false;
                     IsApplyButtonVisible = true;
-
-                    MessageBox.Show("Заполните поля!");
                 }
             }
         }
@@ -596,20 +604,5 @@ namespace Contacts.ViewModel
             IsApplyButtonVisible = false;
             IsCreatingNewContact = false;
         }
-
-        /// <summary>
-        /// Описывает событие при изменении значения.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Метод, который вызывается при изменении значения свойства. 
-        /// </summary>
-        /// <param name="name">Название свойства.</param>
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
     }
 }
